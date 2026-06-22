@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokenization</title>
+    <link rel="stylesheet" href="style.css?v=30">
+    <!-- Google Font for modern premium UI look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Main Content Area -->
+    <main id="canvas-container">
+        <!-- Interactive Gradient Glow Background -->
+        <div class="interactive-glow-bg" id="interactive-glow-bg"></div>
+        <!-- Starfield Space Theme Background -->
+        <div class="starfield-bg" id="starfield"></div>
+        <div class="starfield-overlay"></div>
+
+        <!-- Unified Top Nav Bar -->
+        <nav class="top-nav-bar">
+            <!-- Left Side: Logo/Name -->
+            <div class="top-nav-logo">
+                <span class="status-dot"></span>
+                <span class="header-title-text">Advanced Tokenizer & APIs</span>
+            </div>
+
+            <!-- Right Side: Links & Controls -->
+            <div class="top-nav-controls">
+                <!-- Comparison Button -->
+                <button class="nav-lang-btn" id="tokenizer-info-btn" aria-label="Model Comparison">
+                    <span class="btn-text">MODEL COMPARISON</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-arrow">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                </button>
+
+                <!-- Select Language is now a smaller/secondary control -->
+                <button class="nav-lang-btn" id="select-lang-btn" aria-label="Select Language">
+                    <span class="btn-text">SELECT LANGUAGE</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="btn-arrow">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="content-wrapper">
+            <!-- Left Column: Search Bar & Output -->
+            <div class="search-column">
+                <!-- Language Selector Container (displays above search bar when toggled) -->
+                <div class="lang-selector-container" id="lang-selector-container" style="display: none;">
+                    <div class="lang-modal-card-inline">
+                        <div class="info-modal-header">
+                            <h3>Select Language</h3>
+                            <button class="info-modal-close" id="lang-modal-close" aria-label="Close">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="info-modal-body">
+                            <div class="lang-grid">
+                                <!-- English -->
+                                <div class="lang-card active" data-lang="English" data-native="English">
+                                    <span class="lang-native">English</span>
+                                    <span class="lang-english">English</span>
+                                </div>
+                                <!-- Telugu -->
+                                <div class="lang-card" data-lang="Telugu" data-native="తెలుగు">
+                                    <span class="lang-native">తెలుగు</span>
+                                    <span class="lang-english">Telugu</span>
+                                </div>
+                                <!-- Hindi -->
+                                <div class="lang-card" data-lang="Hindi" data-native="हिन्दी">
+                                    <span class="lang-native">हिन्दी</span>
+                                    <span class="lang-english">Hindi</span>
+                                </div>
+                                <!-- Tamil -->
+                                <div class="lang-card" data-lang="Tamil" data-native="தமிழ்">
+                                    <span class="lang-native">தமிழ்</span>
+                                    <span class="lang-english">Tamil</span>
+                                </div>
+                                <!-- Kannada -->
+                                <div class="lang-card disabled" data-lang="Kannada" data-native="ಕನ್ನಡ">
+                                    <span class="lang-native">ಕನ್ನಡ</span>
+                                    <span class="lang-english">Kannada</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Malayalam -->
+                                <div class="lang-card disabled" data-lang="Malayalam" data-native="മലയാളం">
+                                    <span class="lang-native">മലയാളం</span>
+                                    <span class="lang-english">Malayalam</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Bengali -->
+                                <div class="lang-card disabled" data-lang="Bengali" data-native="বাংলা">
+                                    <span class="lang-native">বাংলা</span>
+                                    <span class="lang-english">Bengali</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Marathi -->
+                                <div class="lang-card disabled" data-lang="Marathi" data-native="మరాठी">
+                                    <span class="lang-native">మరాठी</span>
+                                    <span class="lang-english">Marathi</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Gujarati -->
+                                <div class="lang-card disabled" data-lang="Gujarati" data-native="ગુજરાતી">
+                                    <span class="lang-native">ગુજરાતી</span>
+                                    <span class="lang-english">Gujarati</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Punjabi -->
+                                <div class="lang-card disabled" data-lang="Punjabi" data-native="ਪੰਜਾਬੀ">
+                                    <span class="lang-native">ਪੰਜਾਬੀ</span>
+                                    <span class="lang-english">Punjabi</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Odia -->
+                                <div class="lang-card disabled" data-lang="Odia" data-native="ଓଡ଼ିଆ">
+                                    <span class="lang-native">ଓଡ଼ిଆ</span>
+                                    <span class="lang-english">Odia</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Assamese -->
+                                <div class="lang-card disabled" data-lang="Assamese" data-native="অসমীయా">
+                                    <span class="lang-native">অসমীయా</span>
+                                    <span class="lang-english">Assamese</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Urdu -->
+                                <div class="lang-card disabled" data-lang="Urdu" data-native="اردو">
+                                    <span class="lang-native">اردو</span>
+                                    <span class="lang-english">Urdu</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Sanskrit -->
+                                <div class="lang-card disabled" data-lang="Sanskrit" data-native="संस्कृत">
+                                    <span class="lang-native">संस्कृत</span>
+                                    <span class="lang-english">Sanskrit</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Nepali -->
+                                <div class="lang-card disabled" data-lang="Nepali" data-native="नेपाली">
+                                    <span class="lang-native">नेपाली</span>
+                                    <span class="lang-english">Nepali</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                                <!-- Maithili -->
+                                <div class="lang-card disabled" data-lang="Maithili" data-native="मैथिಲಿ">
+                                    <span class="lang-native">मैथिಲಿ</span>
+                                    <span class="lang-english">Maithili</span>
+                                    <span class="soon-badge">Soon</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lang-modal-footer">
+                            <span id="active-lang-status">Active: English • Model: Akshara 32K</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Central Pill Search Bar Container -->
+                <div class="search-bar-container">
+                    <div class="search-bar">
+                        <!-- Textarea input that auto-grows -->
+                        <textarea class="search-input" id="search-input" placeholder="TYPE TO SEE TOKENS" rows="1" aria-label="Search prompt"></textarea>
+
+                        <!-- Right Controls: Microphone -->
+                        <div class="search-right-controls">
+                            <!-- Voice Search Button -->
+                            <button class="icon-btn voice-btn" id="voice-btn" aria-label="Use microphone">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                                </svg>
+                            </button>
+
+                            <!-- Send Button (hidden initially, displays on text input) -->
+                            <button class="icon-btn send-btn" id="send-btn" aria-label="Send message" style="display: none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tokenizer Output Container (displays below search bar when user types) -->
+                <div class="tokenizer-output-container expanded" id="tokenizer-output" style="display: none;">
+                    <div class="tokenizer-header" id="tokenizer-header" style="cursor: pointer;">
+                        <span class="status-dot"></span>
+                        <h4>TOKEN VIEW</h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="expand-icon">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="tokenizer-content-collapse" id="tokenizer-content-collapse">
+                        <div class="token-badges-list" id="token-badges-list"></div>
+                        <div class="tokenizer-stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-value" id="stat-tokens-value">0</span>
+                                <span class="stat-label">Tokens</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="stat-chars-value">0</span>
+                                <span class="stat-label">Characters</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value" id="stat-fertility-value">0.00</span>
+                                <span class="stat-label">Fertility</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Comparison Container (Positioned inside search-column below search bar) -->
+                <div class="model-comparison-container" id="model-comparison-container">
+                    <div class="comparison-layout">
+                        <!-- Left: Comparison Table -->
+                        <div class="comparison-table-wrapper">
+                            <div class="comparison-section-title">
+                                <span class="section-dot"></span>
+                                <h4>MODEL COMPARISON</h4>
+                            </div>
+                            <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>MODEL</th>
+                                            <th>FERTILITY TOK/WORD ↓</th>
+                                            <th>TELUGU VOCAB % ↑</th>
+                                            <th>OOV</th>
+                                            <th>SCRIPT ACC %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="highlight-row">
+                                            <td>
+                                                <span class="model-name">Akshara 32K</span>
+                                                <span class="model-badge">OUR MODEL</span>
+                                            </td>
+                                            <td class="violet-text font-bold">1.69</td>
+                                            <td class="green-text font-bold">85.8%</td>
+                                            <td class="green-text font-bold">Zero</td>
+                                            <td class="green-text font-bold">99.9%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="model-name">Sarvam AI</span>
+                                                <span class="model-sub">Telugu Llama</span>
+                                            </td>
+                                            <td>3.20</td>
+                                            <td>18%</td>
+                                            <td>Low</td>
+                                            <td>57.1%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="model-name">GPT-4o (100k)</span>
+                                                <span class="model-sub">Open AI</span>
+                                            </td>
+                                            <td>4.80</td>
+                                            <td>0.8%</td>
+                                            <td>Sys-fb</td>
+                                            <td>94.2%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="model-name">Gemini 1.5 Pro</span>
+                                                <span class="model-sub">Google</span>
+                                            </td>
+                                            <td>5.10</td>
+                                            <td>1.2%</td>
+                                            <td>Sys-fb</td>
+                                            <td>93.8%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Right: Progress Bars & Insights -->
+                            <div class="comparison-insights">
+                                <div class="comparison-section-title">
+                                    <span class="section-dot"></span>
+                                    <h4>FERTILITY REDUCTION VS. AKSHARA</h4>
+                                </div>
+                                
+                                <div class="insights-content">
+                                    <!-- Progress bars -->
+                                    <div class="bars-container">
+                                        <div class="bar-group">
+                                            <div class="bar-header">
+                                                <span>Sarvam AI</span>
+                                                <span class="bar-desc">3.20 tok/word vs. Akshara 1.69</span>
+                                            </div>
+                                            <div class="bar-wrapper">
+                                                <div class="bar-fill purple-fill" style="width: 47%"></div>
+                                                <span class="bar-value">47% fewer tokens</span>
+                                            </div>
+                                        </div>
+                                        <div class="bar-group">
+                                            <div class="bar-header">
+                                                <span>GPT-4o (100k)</span>
+                                                <span class="bar-desc">4.80 tok/word vs. Akshara 1.69</span>
+                                            </div>
+                                            <div class="bar-wrapper">
+                                                <div class="bar-fill orange-fill" style="width: 65%"></div>
+                                                <span class="bar-value">65% fewer tokens</span>
+                                            </div>
+                                        </div>
+                                        <div class="bar-group">
+                                            <div class="bar-header">
+                                                <span>Gemini 1.5 Pro</span>
+                                                <span class="bar-desc">5.10 tok/word vs. Akshara 1.69</span>
+                                            </div>
+                                            <div class="bar-wrapper">
+                                                <div class="bar-fill red-fill" style="width: 67%"></div>
+                                                <span class="bar-value">67% fewer tokens</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Notes -->
+                                    <div class="comparison-notes">
+                                        <p>* GPT-4o / Gemini are 100k+ with minimal Telugu vocabulary — very high fertility.</p>
+                                        <p>* Sarvam's vocabulary is Telugu-centric but trained on a smaller corpus.</p>
+                                        <p>* Akshara was built specifically for Telugu with 85.8% Telugu vocabulary.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Right Column: Suggestions Stack -->
+            <div class="sample-phrases-section">
+                <div class="phrases-header">
+                    <div class="phrases-header-left">
+                        <span class="header-indicator"></span>
+                        <h2>SAMPLE PHRASES</h2>
+                    </div>
+                    <button class="refresh-btn" id="refresh-phrases-btn" aria-label="Refresh phrases">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="refresh-icon">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                        </svg>
+                        <span>Refresh</span>
+                    </button>
+                </div>
+                <div class="phrases-grid" id="phrases-grid">
+                    <!-- Dynamic phrases will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js?v=24"></script>
+</body>
+</html>
