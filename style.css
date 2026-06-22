@@ -1,4 +1,4 @@
-/* -------------------------------------------------------------
+﻿/* -------------------------------------------------------------
    Modern Registered Properties for Fluid Transitions
    ------------------------------------------------------------- */
 
@@ -1584,3 +1584,69 @@ textarea {
 .interactive-glow-bg.active {
     opacity: 1;
 }
+
+/* =============================================================
+   ENFORCED TYPOGRAPHY HIERARCHY
+   ============================================================= */
+
+:root {
+    --text-h1: clamp(2.2rem, 5vw, 3.2rem);  /* Large section headlines */
+    --text-h2: 1.15rem;                     /* Medium section titles */
+    --text-h3: 0.75rem;                     /* Small labels and badges */
+    
+    --text-body: 1.05rem;                   /* Standard body text */
+    --line-height-body: 1.6;
+}
+
+/* Body & Paragraph Text */
+body, 
+.search-input, 
+.info-modal-body p,
+.phrase-english,
+.dropdown-item,
+.comparison-table td {
+    font-size: var(--text-body) !important;
+    line-height: var(--line-height-body) !important;
+}
+
+/* Large Headings (H1) */
+.greeting-text {
+    font-size: var(--text-h1) !important;
+    line-height: 1.2 !important;
+}
+
+/* Medium Titles (H2) */
+.comparison-section-title h4,
+.tokenizer-header h4,
+.phrases-header h4,
+.info-modal-header h3 {
+    font-size: var(--text-h2) !important;
+    font-weight: 600 !important;
+}
+
+/* Small Labels & Components (H3) */
+.stat-label,
+.model-badge,
+.soon-badge,
+.btn-text,
+.tooltip-id,
+.tooltip-bytes,
+.comparison-table th {
+    font-size: var(--text-h3) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* Consistent Muted/Secondary Text Colors */
+.stat-label,
+.phrase-english,
+.dropdown-item,
+.comparison-table th,
+.comparison-footnote,
+.model-badge,
+.header-title-text,
+.info-modal-body p,
+.search-input::placeholder {
+    color: var(--text-secondary) !important;
+}
+
