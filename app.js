@@ -410,22 +410,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const star = document.createElement('div');
             const x = Math.random() * 100;
             const y = Math.random() * 100;
-            const size = Math.random() * 1.5 + 1.0;
-            const opacity = Math.random() * 0.4 + 0.5;
-            const hasGlow = Math.random() > 0.3;
-            const delay = Math.random() * 5;
-            const duration = Math.random() * 1.5 + 1.0;
-
-            star.className = `star ${hasGlow ? 'glow' : ''}`;
-            if (!hasGlow) {
-                star.style.opacity = opacity;
-            }
+            const size = Math.random() * 2 + 1; // 1px to 3px
+            
+            star.className = 'star glow'; // All stars can twinkle now!
             star.style.left = `${x}%`;
             star.style.top = `${y}%`;
             star.style.width = `${size}px`;
             star.style.height = `${size}px`;
-            star.style.animationDelay = `${delay}s`;
-            star.style.animationDuration = `${duration}s`;
+            
+            // Duration between 4s and 12s so it twinkles infrequently
+            star.style.animationDuration = `${Math.random() * 8 + 4}s`;
+            // Random negative delay so they are all completely desynchronized from the start
+            star.style.animationDelay = `-${Math.random() * 12}s`;
             
             fragment.appendChild(star);
         }

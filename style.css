@@ -1,4 +1,4 @@
-﻿/* -------------------------------------------------------------
+/* -------------------------------------------------------------
    Modern Registered Properties for Fluid Transitions
    ------------------------------------------------------------- */
 
@@ -1554,24 +1554,6 @@ textarea {
     background-color: #ffffff;
     clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 }
-
-.star.glow {
-    animation: twinkle infinite ease-in-out;
-}
-
-@keyframes twinkle {
-    0%, 100% {
-        opacity: 0.15;
-    }
-    50% {
-        opacity: 1;
-    }
-}
-
-/* -------------------------------------------------------------
-   Interactive Gradient Glow Background (Purple mixed with White)
-   ------------------------------------------------------------- */
-.interactive-glow-bg {
     position: fixed;
     inset: 0;
     pointer-events: none;
@@ -1648,5 +1630,19 @@ body,
 .info-modal-body p,
 .search-input::placeholder {
     color: var(--text-secondary) !important;
+}
+
+
+.star.glow {
+    animation: twinkle infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 85%, 100% {
+        opacity: 0.15;
+    }
+    92% {
+        opacity: 1;
+    }
 }
 
