@@ -268,18 +268,36 @@ document.addEventListener('DOMContentLoaded', () => {
             const isActive = canvasContainer.classList.toggle('comparison-active');
             tokenizerInfoBtn.classList.toggle('comparison-active-btn');
             
-            // Dynamically change suggestions count to fill vertical column space
+            const searchBarContainer = document.querySelector('.search-bar-container');
+            const tokenizerOutputContainer = document.querySelector('.tokenizer-output-container');
+            const samplePhrasesSection = document.querySelector('.sample-phrases-section');
+            const searchColumn = document.querySelector('.search-column');
+            const phrasesHeader = document.querySelector('.phrases-header');
+            const modelComparisonContainer = document.getElementById('model-comparison-container');
+            
+            // Dynamically change suggestions count
             phrasesToShowCount = isActive ? 8 : 4;
             renderPhrases();
             
             if (isActive) {
-                const comparisonContainer = document.getElementById('model-comparison-container');
-                if (comparisonContainer) {
+                // Move search bar and token output to the RIGHT column, above the phrases header
+                if (samplePhrasesSection && phrasesHeader && searchBarContainer && tokenizerOutputContainer) {
+                    samplePhrasesSection.insertBefore(tokenizerOutputContainer, phrasesHeader);
+                    samplePhrasesSection.insertBefore(searchBarContainer, tokenizerOutputContainer);
+                }
+                
+                if (modelComparisonContainer) {
                     setTimeout(() => {
-                        comparisonContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        modelComparisonContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }, 20);
                 }
             } else {
+                // Move them back to the LEFT column, above the model comparison container
+                if (searchColumn && modelComparisonContainer && searchBarContainer && tokenizerOutputContainer) {
+                    searchColumn.insertBefore(tokenizerOutputContainer, modelComparisonContainer);
+                    searchColumn.insertBefore(searchBarContainer, tokenizerOutputContainer);
+                }
+                
                 canvasContainer.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
