@@ -29,11 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnTokenView = document.getElementById('btn-token-view');
     const samplePhrasesContainer = document.getElementById('sample-phrases-container');
 
-    const showSamplePhrases = () => {
+    const showSamplePhrases = (forceOpen = false) => {
         if (btnSamplePhrases && btnSamplePhrases.classList.contains('active')) {
-            // Already active, toggle off
-            btnSamplePhrases.classList.remove('active');
-            if (samplePhrasesContainer) samplePhrasesContainer.style.display = 'none';
+            if (!forceOpen) {
+                // Already active, toggle off
+                btnSamplePhrases.classList.remove('active');
+                if (samplePhrasesContainer) samplePhrasesContainer.style.display = 'none';
+            }
             return;
         }
         if (btnSamplePhrases) btnSamplePhrases.classList.add('active');
@@ -474,4 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     initStarfield();
+
+    // Ensure sample phrases are shown by default on load
+    showSamplePhrases(true);
 });
