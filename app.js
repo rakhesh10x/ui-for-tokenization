@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const canvasContainer = document.getElementById('canvas-container');
     const searchInput = document.getElementById('search-input');
-    const sendBtn = document.getElementById('send-btn');
     const voiceBtn = document.querySelector('.voice-btn');
     
     // Model Comparison button
@@ -24,6 +23,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const statTokensValue = document.getElementById('stat-tokens-value');
     const statCharsValue = document.getElementById('stat-chars-value');
     const statFertilityValue = document.getElementById('stat-fertility-value');
+
+    // View Toggles
+    const btnSamplePhrases = document.getElementById('btn-sample-phrases');
+    const btnTokenView = document.getElementById('btn-token-view');
+    const samplePhrasesContainer = document.getElementById('sample-phrases-container');
+
+    const showSamplePhrases = () => {
+        if (btnSamplePhrases && btnSamplePhrases.classList.contains('active')) {
+            // Already active, toggle off
+            btnSamplePhrases.classList.remove('active');
+            if (samplePhrasesContainer) samplePhrasesContainer.style.display = 'none';
+            return;
+        }
+        if (btnSamplePhrases) btnSamplePhrases.classList.add('active');
+        if (btnTokenView) btnTokenView.classList.remove('active');
+        if (samplePhrasesContainer) samplePhrasesContainer.style.display = 'block';
+        if (tokenizerOutput) tokenizerOutput.style.display = 'none';
+        
+        // Ensure phrases are rendered
+        if(phrasesGrid && phrasesGrid.innerHTML.trim() === '') {
+            renderPhrases();
+        }
+    };
+
+    const showTokenView = (forceOpen = false) => {
+        if (btnTokenView && btnTokenView.classList.contains('active')) {
+            if (!forceOpen) {
+                // Already active, toggle off
+                btnTokenView.classList.remove('active');
+                if (tokenizerOutput) tokenizerOutput.style.display = 'none';
+            }
+            return;
+        }
+        if (btnSamplePhrases) btnSamplePhrases.classList.remove('active');
+        if (btnTokenView) btnTokenView.classList.add('active');
+        if (samplePhrasesContainer) samplePhrasesContainer.style.display = 'none';
+        if (tokenizerOutput) {
+            tokenizerOutput.style.display = 'block';
+        }
+    };
+
+    if (btnSamplePhrases && btnTokenView) {
+        btnSamplePhrases.addEventListener('click', () => showSamplePhrases());
+        btnTokenView.addEventListener('click', () => showTokenView());
+    }
 
     // 16 Sample Phrases from user's image
     const samplePhrases = [
@@ -95,7 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const trimmed = text.trim();
         if (!trimmed) {
-            tokenizerOutput.style.display = 'none';
+            // keep it visible if token view is active, but maybe empty?
+            if(btnTokenView && !btnTokenView.classList.contains('active')) {
+                tokenizerOutput.style.display = 'none';
+            }
             checkGlowState();
             statTokensValue.textContent = '0';
             statCharsValue.textContent = '0';
@@ -109,7 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         const tokens = tokenizeText(trimmed);
-        tokenizerOutput.style.display = 'block';
+        
+        // Auto switch to token view when typing
+        showTokenView(true);
         
         // Calculate stats
         const charCount = text.length;
@@ -216,8 +265,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchInput.style.height = 'auto';
                 searchInput.style.height = searchInput.scrollHeight + 'px';
                 // Trigger button toggle
-                sendBtn.style.display = 'flex';
-                voiceBtn.style.display = 'none';
+                if (voiceBtn) voiceBtn.style.display = 'none';
+                
+                showTokenView(true);
+                
                 updateTokenizer(phrase.telugu); // Update tokenizer above search bar
                 searchInput.focus();
             });
@@ -251,55 +302,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update tokenizer live display
         updateTokenizer(searchInput.value);
+        if (searchInput.value.trim().length > 0) {
+            showTokenView(true);
+        }
 
         // Toggle buttons
         if (searchInput.value.trim().length > 0) {
-            sendBtn.style.display = 'flex';
-            voiceBtn.style.display = 'none';
+            if (voiceBtn) voiceBtn.style.display = 'none';
         } else {
-            sendBtn.style.display = 'none';
-            voiceBtn.style.display = 'flex';
+            if (voiceBtn) voiceBtn.style.display = 'flex';
         }
     });
 
-    // 3. Model Comparison Toggle Handler
-    if (tokenizerInfoBtn) {
+    // 3. Model Comparison Modal Handler
+    const modelComparisonOverlay = document.getElementById('model-comparison-overlay');
+    const modelComparisonClose = document.getElementById('model-comparison-close');
+    
+    if (tokenizerInfoBtn && modelComparisonOverlay) {
         tokenizerInfoBtn.addEventListener('click', () => {
-            const isActive = canvasContainer.classList.toggle('comparison-active');
-            tokenizerInfoBtn.classList.toggle('comparison-active-btn');
-            
-            const searchBarContainer = document.querySelector('.search-bar-container');
-            const tokenizerOutputContainer = document.querySelector('.tokenizer-output-container');
-            const samplePhrasesSection = document.querySelector('.sample-phrases-section');
-            const searchColumn = document.querySelector('.search-column');
-            const phrasesHeader = document.querySelector('.phrases-header');
-            const modelComparisonContainer = document.getElementById('model-comparison-container');
-            
-            // Dynamically change suggestions count
-            phrasesToShowCount = isActive ? 8 : 4;
-            renderPhrases();
-            
-            if (isActive) {
-                // Move search bar and token output to the RIGHT column, above the phrases header
-                if (samplePhrasesSection && phrasesHeader && searchBarContainer && tokenizerOutputContainer) {
-                    samplePhrasesSection.insertBefore(tokenizerOutputContainer, phrasesHeader);
-                    samplePhrasesSection.insertBefore(searchBarContainer, tokenizerOutputContainer);
-                }
-                
-                if (modelComparisonContainer) {
-                    setTimeout(() => {
-                        modelComparisonContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 20);
-                }
-            } else {
-                // Move them back to the LEFT column, above the model comparison container
-                if (searchColumn && modelComparisonContainer && searchBarContainer && tokenizerOutputContainer) {
-                    searchColumn.insertBefore(tokenizerOutputContainer, modelComparisonContainer);
-                    searchColumn.insertBefore(searchBarContainer, tokenizerOutputContainer);
-                }
-                
-                canvasContainer.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            modelComparisonOverlay.classList.add('show');
+            tokenizerInfoBtn.classList.add('comparison-active-btn');
+        });
+    }
+
+    if (modelComparisonClose && modelComparisonOverlay) {
+        modelComparisonClose.addEventListener('click', () => {
+            modelComparisonOverlay.classList.remove('show');
+            tokenizerInfoBtn.classList.remove('comparison-active-btn');
         });
     }
 
@@ -376,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Clear search and reset heights on mock send
     const handleSend = () => {
         // Clear voice state if active
-        if (voiceBtn.classList.contains('listening')) {
+        if (voiceBtn && voiceBtn.classList.contains('listening')) {
             voiceBtn.classList.remove('listening');
             searchInput.placeholder = "TYPE TO SEE TOKENS";
         }
@@ -386,8 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Prompt submitted: ${text}`);
             searchInput.value = '';
             searchInput.style.height = 'auto';
-            sendBtn.style.display = 'none';
-            voiceBtn.style.display = 'flex';
+            if (voiceBtn) voiceBtn.style.display = 'flex';
             updateTokenizer(''); // Clear tokenizer display
         }
     };
@@ -408,7 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    sendBtn.addEventListener('click', handleSend);
     searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
