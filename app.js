@@ -64,6 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
+    // Make samples extremely large to fill the new UI layout
+    Object.keys(languageSamples).forEach(lang => {
+        languageSamples[lang] = languageSamples[lang].map(text => {
+            return text + " " + text + " " + text + " " + text;
+        });
+    });
+
     let activeLanguage = "English";
     let currentSampleIndex = 0;
 
@@ -114,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const trimmed = text.trim();
         if (!trimmed) {
-            tokenizerOutput.style.display = 'none';
+            tokenBadgesList.innerHTML = '';
             checkGlowState();
             statTokensValue.textContent = '0';
             statCharsValue.textContent = '0';
@@ -128,9 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         const tokens = tokenizeText(trimmed);
-        
-        // Auto switch to token view when typing
-        tokenizerOutput.style.display = 'block';
         
         // Calculate stats
         const charCount = text.length;
@@ -192,9 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchInput) {
             searchInput.value = samples[currentSampleIndex];
             
-            // Auto resize
-            searchInput.style.height = 'auto';
-            searchInput.style.height = searchInput.scrollHeight + 'px';
+            // Update tokenizer
             
             // Update tokenizer
             updateTokenizer(searchInput.value);
@@ -227,11 +229,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Main Input Search Handler
     searchInput.addEventListener('input', () => {
         checkGlowState();
-
-        // Reset height
-        searchInput.style.height = 'auto';
-        // Set new height based on content
-        searchInput.style.height = searchInput.scrollHeight + 'px';
 
         // Update tokenizer live display
         updateTokenizer(searchInput.value);
