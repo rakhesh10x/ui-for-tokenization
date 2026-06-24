@@ -196,6 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchInput) {
             searchInput.value = samples[currentSampleIndex];
             
+            // No more JS auto-resizing.
+            
             // Update tokenizer
             
             // Update tokenizer
@@ -226,9 +228,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+
     // 2. Main Input Search Handler
     searchInput.addEventListener('input', () => {
         checkGlowState();
+
+        // No more JS auto-resizing. Let CSS handle the 55% height.
 
         // Update tokenizer live display
         updateTokenizer(searchInput.value);
@@ -240,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (clearBtn) clearBtn.style.display = 'flex';
         } else {
             if (voiceBtn) voiceBtn.style.display = 'flex';
-            if (trySampleBtn) trySampleBtn.style.display = '';
+            if (trySampleBtn) trySampleBtn.style.display = 'flex';
             if (clearBtn) clearBtn.style.display = 'none';
         }
     });
@@ -387,4 +393,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Load default sample immediately on page load
     loadSampleForLanguage(activeLanguage, false);
+    
 });
