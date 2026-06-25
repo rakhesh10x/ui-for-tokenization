@@ -239,12 +239,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update tokenizer live display
         updateTokenizer(searchInput.value);
 
-        // Toggle buttons
+        const searchColumn = searchInput.closest('.search-column');
+
+        // Toggle buttons and state
         if (searchInput.value.trim().length > 0) {
+            if (searchColumn) searchColumn.classList.add('is-typing');
             if (voiceBtn) voiceBtn.style.display = 'none';
             if (trySampleBtn) trySampleBtn.style.display = 'none';
             if (clearBtn) clearBtn.style.display = 'flex';
         } else {
+            if (searchColumn) searchColumn.classList.remove('is-typing');
             if (voiceBtn) voiceBtn.style.display = 'flex';
             if (trySampleBtn) trySampleBtn.style.display = 'flex';
             if (clearBtn) clearBtn.style.display = 'none';

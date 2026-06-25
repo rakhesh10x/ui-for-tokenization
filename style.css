@@ -111,9 +111,8 @@ textarea {
     max-width: 850px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    min-height: 0;
+    justify-content: flex-start;
+    gap: 1.5rem;
 }
 
 .output-column {
@@ -126,7 +125,6 @@ textarea {
 
 .content-wrapper {
     width: 100%;
-    flex: 1;
     padding: 0;
     z-index: 10;
     display: flex;
@@ -162,9 +160,18 @@ textarea {
     animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
     display: flex;
     flex-direction: column;
-    flex: 0 0 51%;
-    height: 51%;
-    min-height: 0;
+    flex: 0 0 64px;
+    min-height: 64px;
+    transition: flex 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-column.is-typing .search-bar-container {
+    flex: 0 0 54%;
+    height: 54%;
+}
+
+.search-column-spacer {
+    display: none;
 }
 
 .search-bar {
@@ -239,6 +246,14 @@ textarea {
     overflow-y: auto;
     transition: height 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     color: var(--text-primary);
+    -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%), linear-gradient(to bottom, black, black);
+    mask-image: linear-gradient(to bottom, black 65%, transparent 100%), linear-gradient(to bottom, black, black);
+    -webkit-mask-size: calc(100% - 14px) 100%, 14px 100%;
+    mask-size: calc(100% - 14px) 100%, 14px 100%;
+    -webkit-mask-position: left top, right top;
+    mask-position: left top, right top;
+    -webkit-mask-repeat: no-repeat, no-repeat;
+    mask-repeat: no-repeat, no-repeat;
 }
 
 .search-input::placeholder {
@@ -1271,6 +1286,7 @@ textarea {
     margin-top: 0;
     margin-bottom: 38px;
     flex: 1;
+    min-height: 560px;
     background-color: rgba(12, 12, 16, 0.4);
     border: 1.5px solid var(--border-color);
     border-radius: 16px;
@@ -1310,6 +1326,9 @@ textarea {
 .tokenizer-content-collapse {
     width: 100%;
     max-height: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     opacity: 0;
     margin-top: 0;
